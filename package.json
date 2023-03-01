@@ -1,0 +1,20 @@
+{
+  "name": "place2b",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^23.1.1",
+    "electron-prompt": "^1.7.0"
+  },
+  "dependencies": {
+    "sudo-prompt": "^9.2.1"
+  }
+}
