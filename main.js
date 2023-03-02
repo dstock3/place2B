@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const MacChanger = require('./tools/macchanger');
 
 function createWindow() {
@@ -6,40 +6,24 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
     }
   })
 
-  // Load the index.html file
   win.loadFile('index.html')
 
-  // Define a function to handle the "Change MAC Address" button click event
-  const handleChangeMacClick = () => {
-    // Call the MacChanger function to change the MAC address
-    MacChanger()
-      .then(() => {
-        console.log('MAC address changed successfully')
-      })
-      .catch((err) => {
-        console.error('Error changing MAC address:', err)
-      })
-  }
-
-  // Add a "Change MAC Address" button to the UI
-  const template = [
-    {
-      label: 'Edit',
-      submenu: [
-        {
-          label: 'Change MAC Address',
-          accelerator: 'CmdOrCtrl+Shift+C',
-          click: handleChangeMacClick
-        }
-      ]
+  // Handle "Change MAC Address" button click event
+  ipcMain.on('change-mac-address', async (event, arg) => {
+    try {
+      await MacChanger();
+      event.reply('change-mac-address-response', { success: true });
+    } catch (err) {
+      console.error('Error changing MAC address:', err);
+      event.reply('change-mac-address-response', { success: false, error: err });
     }
-  ]
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+  });
 }
 
 app.whenReady().then(() => {
@@ -56,4 +40,3 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-

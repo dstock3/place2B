@@ -1,0 +1,51 @@
+/* Style for the header */
+body {
+    background-color: #1b2530;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2C3E50;
+    padding: 20px;
+    color: #FFFFFF;
+}
+  
+header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+/* Style for the main content */
+main {
+    max-width: 1200px;
+    height: 70vh;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#mac-changer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+button {
+    font-size: 20px;
+    padding: 10px 20px;
+}
+
+/* Style for the footer */
+footer {
+    background-color: #2C3E50;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+}
+  
