@@ -13,7 +13,7 @@ const MacChanger = async () => {
 
   const freq = await prompt({
     title: 'Change MAC Address',
-    label: 'Enter frequency of MAC address changes (in seconds):',
+    label: 'Enter frequency of MAC address changes (in minutes):',
     inputAttrs: {
       type: 'number'
     }
@@ -25,18 +25,16 @@ const MacChanger = async () => {
   };
 
   setInterval(() => {
-    // Generate a random MAC address
-    const newMac = Array.from({ length: 6 }, () => Math.floor(Math.random() * 256).toString(16)).join(':');
     console.log(`Changing MAC address of ${iface} to ${newMac}`);
     // Use the macchanger command to change the MAC address
-    sudo.exec(`macchanger -m ${newMac} ${iface}`, options, (error, stdout, stderr) => {
+    sudo.exec(`macchanger -r ${iface}`, options, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error changing MAC address: ${error.message}`);
         return;
       }
       console.log(`MAC address changed successfully`);
     });
-  }, freq * 1000);
+  }, freq * 60000);
 }
 
 module.exports = MacChanger;

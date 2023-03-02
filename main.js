@@ -26,7 +26,6 @@ function createWindow() {
   }
 
   // Add a "Change MAC Address" button to the UI
-  const { Menu, MenuItem } = require('electron')
   const template = [
     {
       label: 'Edit',
@@ -45,7 +44,6 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow()
-
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow()
