@@ -1,3 +1,10 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* Style for the header */
 body {
     background-color: #1b2530;
@@ -14,6 +21,7 @@ header {
     background-color: #2C3E50;
     padding: 20px;
     color: #FFFFFF;
+    height: 10vh;
 }
   
 header h1 {
@@ -23,10 +31,17 @@ header h1 {
 
 /* Style for the main content */
 main {
-    max-width: 1200px;
+    width: 100vw;
     height: 70vh;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar {
+    width: 25vw;
+    height: 100%;
 }
 
 #mac-changer-container {
@@ -37,6 +52,7 @@ main {
 }
 
 button {
+    font-size: .75em;
     font-size: 20px;
     padding: 10px 20px;
 }
@@ -47,5 +63,50 @@ footer {
     color: #FFFFFF;
     padding: 10px;
     text-align: center;
+    height: 10vh;
+}
+
+/* Panels */
+
+.panel-container {
+    width: 73vw;
+    display: flex;
+}
+
+.panel-controller {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.min-max-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 15px;
+    width: 15px;
+    background-color: #698fb6;
+}
+
+.panel {
+    background-color: #2C3E50;
+    border-radius: 5px;
+    padding: 5px;
+
+}
+
+/* Terminal */
+.terminal-display {
+    background-color: #222;
+    color: #fff;
+    font-family: monospace;
+    padding: 10px;
+    height: 200px;
 }
   
+.terminal-line {
+    line-height: 1.5;
+}
+  
+

@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "node-cron": "^3.0.2",
-    "sudo-prompt": "^9.2.1"
+    "node-pty": "^0.10.1",
+    "sudo-prompt": "^9.2.1",
+    "xterm": "^5.1.0",
+    "xterm-addon-fit": "^0.7.0"
   }
 }

@@ -1,5 +1,16 @@
 const { ipcRenderer } = require('electron');
+const { addMacChanger } = require('./doc/macchanger')
+const { addNetworkInterfaces } = require('./doc/network')
 const { getNetworkInterfaces } = require('./tools/network');
+const { renderTerminal } = require('./doc/terminal')
+
+try {
+  const MyTerminal = require('./tools/terminal')
+  const terminal = new MyTerminal
+  renderTerminal(terminal)
+} catch (e) {
+  console.error('Error initializing terminal:', e)
+}
 
 const handleChangeMacClick = () => {
   ipcRenderer.send('change-mac-address');
@@ -12,37 +23,25 @@ const handleChangeMacClick = () => {
   });
 };
 
-const macChangerButton = document.createElement('button');
-macChangerButton.textContent = 'Change MAC Address';
-macChangerButton.addEventListener('click', handleChangeMacClick);
+addMacChanger(handleChangeMacClick)
+addNetworkInterfaces(getNetworkInterfaces)
 
-const macChangerDiv = document.createElement('div');
-macChangerDiv.classList.add('button-container');
-macChangerDiv.appendChild(macChangerButton);
+const networkInterfacesSelect = document.getElementById('network-interfaces-select');
+const frequencyInput = document.getElementById('frequency-input');
+const changeNowButton = document.getElementById('change-mac-btn');
 
-const mainElement = document.querySelector('main');
-mainElement.appendChild(macChangerDiv);
+changeNowButton.addEventListener('click', () => {
+  const iface = networkInterfacesSelect.value;
+  ipcRenderer.send('change-mac-address', iface);
+});
 
-// Display network interfaces
-const networksContainer = document.getElementById('network-container');
-
-async function displayNetworkInterfaces() {
-  const networkInterfaces = await getNetworkInterfaces();
-  console.log(networkInterfaces)
-
-  networkInterfaces.forEach((iface) => {
-    const ifaceDiv = document.createElement('div');
-    const nameSpan = document.createElement('span');
-    const addressSpan = document.createElement('span');
-    nameSpan.textContent = `Name: ${iface.name}`;
-    addressSpan.textContent = `Address: ${iface.address}`;
-    ifaceDiv.appendChild(nameSpan);
-    ifaceDiv.appendChild(addressSpan);
-    networksContainer.appendChild(ifaceDiv);
+ipcRenderer.on('network-interfaces', (event, networkInterfaces) => {
+  networkInterfacesSelect.innerHTML = '';
+  networkInterfaces.forEach(({ name }) => {
+    const option = document.createElement('option');
+    option.text = name;
+    option.value = name;
+    networkInterfacesSelect.add(option);
   });
-}
-
-displayNetworkInterfaces();
-
-
+});
 

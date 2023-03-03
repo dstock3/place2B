@@ -1,43 +1,66 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const MacChanger = require('./tools/macchanger');
+const sudo = require('sudo-prompt');
+const { getNetworkInterfaces } = require('./tools/network');
 
-function createWindow() {
-  const win = new BrowserWindow({
+const changeMacAddress = async (iface) => {
+  const options = {
+    name: 'Electron',
+  };
+
+  return new Promise((resolve, reject) => {
+    sudo.exec(`macchanger -r ${iface}`, options, (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve(stdout);
+    });
+  });
+};
+
+let mainWindow;
+
+const createWindow = async () => {
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      enableRemoteModule: true,
-    }
-  })
+    },
+  });
 
-  win.loadFile('index.html')
+  mainWindow.loadFile('index.html');
 
-  // Handle "Change MAC Address" button click event
-  ipcMain.on('change-mac-address', async (event, arg) => {
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools()
+
+  // Add an error listener to the process object
+  process.on('uncaughtException', (err) => {
+    console.error('Uncaught exception:', err);
+  });
+
+  const interfaces = await getNetworkInterfaces();
+  mainWindow.webContents.send('available-interfaces', interfaces);
+
+  ipcMain.on('change-mac-address', async (event, iface, freq) => {
     try {
-      await MacChanger();
-      event.reply('change-mac-address-response', { success: true });
+      const result = await changeMacAddress(iface);
+      event.reply('mac-address-changed', `Result: ${result}`);
+      setInterval(async () => {
+        try {
+          const result = await changeMacAddress(iface);
+          event.reply('mac-address-changed', `Result: ${result}`);
+        } catch (err) {
+          console.error(`Error changing MAC address: ${err.message}`);
+        }
+      }, freq * 60 * 1000);
     } catch (err) {
-      console.error('Error changing MAC address:', err);
-      event.reply('change-mac-address-response', { success: false, error: err });
+      console.error(`Error changing MAC address: ${err.message}`);
     }
   });
-}
+};
 
-app.whenReady().then(() => {
-  createWindow()
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
-})
+app.whenReady().then(createWindow);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
 

@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const sudo = require('sudo-prompt');
 const prompt = require('electron-prompt');
 const { getNetworkInterfaces } = require('./network');
@@ -32,7 +31,7 @@ const MacChanger = async () => {
   });
   if (!iface) return;
 
-  const freq = await prompt({
+  let freq = await prompt({
     title: 'Change MAC Address',
     label: 'Enter frequency of MAC address changes (in minutes):',
     inputAttrs: {
@@ -41,17 +40,39 @@ const MacChanger = async () => {
   });
   if (!freq) return;
 
-  const job = cron.schedule(`*/${freq} * * * *`, async () => {
+  let intervalId = null;
+
+  const changeNowButton = document.createElement('button');
+  changeNowButton.innerText = 'Change Now';
+  changeNowButton.style.marginLeft = '10px';
+  changeNowButton.onclick = async () => {
     try {
-      console.log(`Changing MAC address of ${iface}`);
+      console.log(`Changing MAC address of ${iface}...`);
       const result = await changeMacAddress(iface);
       console.log(`Result: ${result}`);
     } catch (err) {
       console.error(`Error changing MAC address: ${err.message}`);
     }
-  });
+  };
+  document.getElementById('macchanger-form').appendChild(changeNowButton);
 
-  job.start();
+  freq = freq * 60 * 1000; // convert to milliseconds
+
+  intervalId = setInterval(async () => {
+    try {
+      console.log(`Changing MAC address of ${iface}...`);
+      const result = await changeMacAddress(iface);
+      console.log(`Result: ${result}`);
+    } catch (err) {
+      console.error(`Error changing MAC address: ${err.message}`);
+    }
+  }, freq);
+
+  // Return a function to stop the interval when necessary
+  return () => {
+    clearInterval(intervalId);
+    document.getElementById('macchanger-form').removeChild(changeNowButton);
+  };
 };
 
-module.exports = MacChanger;
+module.exports = changeMacAddress;
