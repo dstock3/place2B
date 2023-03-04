@@ -1,22 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const sudo = require('sudo-prompt');
 const { getNetworkInterfaces } = require('./tools/network');
-
-const changeMacAddress = async (iface) => {
-  const options = {
-    name: 'Electron',
-  };
-
-  return new Promise((resolve, reject) => {
-    sudo.exec(`macchanger -r ${iface}`, options, (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
-        return;
-      }
-      resolve(stdout);
-    });
-  });
-};
+const { changeMacAddress } = require('./tools/macchanger');
 
 let mainWindow;
 
@@ -43,18 +28,19 @@ const createWindow = async () => {
   const interfaces = await getNetworkInterfaces();
   mainWindow.webContents.send('available-interfaces', interfaces);
 
-  ipcMain.on('change-mac-address', async (event, iface, freq) => {
+  ipcMain.on('change-mac-address', async (event, iface) => {
+    
     try {
       const result = await changeMacAddress(iface);
       event.reply('mac-address-changed', `Result: ${result}`);
-      setInterval(async () => {
+      (async () => {
         try {
           const result = await changeMacAddress(iface);
           event.reply('mac-address-changed', `Result: ${result}`);
         } catch (err) {
           console.error(`Error changing MAC address: ${err.message}`);
         }
-      }, freq * 60 * 1000);
+      })
     } catch (err) {
       console.error(`Error changing MAC address: ${err.message}`);
     }

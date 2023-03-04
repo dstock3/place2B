@@ -75,4 +75,4 @@ const MacChanger = async () => {
   };
 };
 
-module.exports = changeMacAddress;
+module.exports = { changeMacAddress }

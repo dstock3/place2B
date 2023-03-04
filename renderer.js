@@ -3,7 +3,7 @@ const { addMacChanger } = require('./doc/macchanger')
 const { addNetworkInterfaces } = require('./doc/network')
 const { getNetworkInterfaces } = require('./tools/network');
 const { renderTerminal } = require('./doc/terminal')
-
+/*
 try {
   const MyTerminal = require('./tools/terminal')
   const terminal = new MyTerminal
@@ -11,9 +11,10 @@ try {
 } catch (e) {
   console.error('Error initializing terminal:', e)
 }
-
+*/
 const handleChangeMacClick = () => {
-  ipcRenderer.send('change-mac-address');
+  const iface = networkInterfacesSelect.value;
+  ipcRenderer.send('change-mac-address', iface); // pass the iface name as an argument
   ipcRenderer.once('change-mac-address-response', (event, arg) => {
     if (arg.success) {
       console.log('MAC address changed successfully');
@@ -22,6 +23,7 @@ const handleChangeMacClick = () => {
     }
   });
 };
+
 
 addMacChanger(handleChangeMacClick)
 addNetworkInterfaces(getNetworkInterfaces)
@@ -32,7 +34,7 @@ const changeNowButton = document.getElementById('change-mac-btn');
 
 changeNowButton.addEventListener('click', () => {
   const iface = networkInterfacesSelect.value;
-  ipcRenderer.send('change-mac-address', iface);
+  handleChangeMacClick(iface);
 });
 
 ipcRenderer.on('network-interfaces', (event, networkInterfaces) => {
