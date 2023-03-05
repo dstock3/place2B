@@ -91,7 +91,6 @@ button {
 
 .panels {
     background: #698fb6;
-    height: 92%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,7 +98,7 @@ button {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     width: 100%;
-    height: 100%;
+    height: 93%;
 }
 
 .panel-container {
@@ -164,27 +163,68 @@ button {
 
 .sidebar {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
     width: 33vw;
     height: 100%;
     margin-left: 5px;
 }
 
 /* Terminal */
+.terminal {
+    height: 93%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .terminal-display {
-    border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     border: 2px solid #698fb6;
     background-color: #131313;
     color: #fff;
     font-family: monospace;
     padding: 10px;
-    height: 93%;
+    height: 92%;
     width: 100%;
+    overflow: hidden;
+}
+
+.terminal-controller {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 8%;
+    background-color: #698fb6;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.clear-button {
+    height: 92%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-inline: 5px;
+    background-color: #2C3E50;
+    color: white;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: .85em;
+    font-weight: bold;
 
 }
   
 .terminal-line {
-    line-height: 1.5;
+    color: #94c8fc;
+    position: relative;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 20px;
 }
 
 .hidden {
@@ -216,4 +256,13 @@ button {
     }
 }
   
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 5px;
+    }
+}
+
 

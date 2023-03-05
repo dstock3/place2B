@@ -4,8 +4,10 @@ const { addNetworkInterfaces } = require('./doc/network')
 const { getNetworkInterfaces } = require('./tools/network');
 const { renderTerminal } = require('./doc/terminal');
 const { tabSelect } = require('./doc/tabSelect');
+const { helper } = require('./doc/help')
 
 tabSelect();
+helper();
 
 /*
 try {
