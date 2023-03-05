@@ -21,9 +21,9 @@
     <main>
       <div class="panel-display">
         <div class="panel-display-controller">
-          <div class="tab selected" id="tab-1">Utility Page 1</div>
-          <div class="tab" id="tab-2">Utility Page 2</div>
-          <div class="tab" id="tab-3">Utility Page 3</div>
+          <div class="tab selected" data-panel="1" id="tab-1">Utility Page 1</div>
+          <div class="tab" data-panel="2" id="tab-2">Utility Page 2</div>
+          <div class="tab" data-panel="3" id="tab-3">Utility Page 3</div>
         </div>
         <div class="panels">
           <div class="panel-container active" id="1">
@@ -31,6 +31,7 @@
             <div class="panel">
               <div class="panel-controller">
                 <div class="panel-head">MAC Changer</div>
+                <div class="info"></div>
               </div>
               <!-- 
               <div id="network-interface-container">
