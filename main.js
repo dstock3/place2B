@@ -17,9 +17,6 @@ const createWindow = async () => {
 
   mainWindow.loadFile('index.html');
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
-
   // Add an error listener to the process object
   process.on('uncaughtException', (err) => {
     console.error('Uncaught exception:', err);
