@@ -56,11 +56,59 @@ button {
 
 /* Panels */
 
-.panel-container {
+.panel-display {
     width: 73vw;
+    height: 100%;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.panel-display-controller {
+    height: 7%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.tab {
+    width: 20%;
+    background: #35485c;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .85em;
+    margin-right: 2px;
+}
+
+.selected {
+    background: #698fb6;
+}
+
+.panels {
+    background: #698fb6;
+    height: 92%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.panel-container {
+    width: 98%;
+    height: 98%;
     display: flex;
     flex-wrap: wrap;
-    margin-left: 5px;
+    justify-content: center;
+    align-items: center;
 }
 
 .panel {
@@ -68,7 +116,7 @@ button {
     border-radius: 5px;
     padding: 5px;
     height: 49%;
-    width: 31%;
+    width: 32%;
     margin-right: 5px;
 }
 
@@ -76,22 +124,13 @@ button {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .panel-head {
     font-size: 1.05em;
     font-weight: bold;
-}
-
-.min-max-panel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    height: 15px;
-    width: 15px;
-    background-color: #698fb6;
 }
 
 .network-interface-container {
@@ -111,24 +150,39 @@ button {
 }
 
 .sidebar {
+    display: flex;
+    align-items: flex-end;
     width: 33vw;
     height: 100%;
+    margin-left: 5px;
 }
 
 /* Terminal */
 .terminal-display {
     border-radius: 5px;
     border: 2px solid #698fb6;
-    background-color: #222;
+    background-color: #131313;
     color: #fff;
     font-family: monospace;
     padding: 10px;
-    height: 100%;
+    height: 93%;
+    width: 100%;
 
 }
   
 .terminal-line {
     line-height: 1.5;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+    height: 0;
+    width: 0;
+}
+
+.active {
+    visibility: visible;
 }
   
 
