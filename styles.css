@@ -184,5 +184,23 @@ button {
 .active {
     visibility: visible;
 }
+
+.terminal-cursor::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 1em;
+    background-color: #698fb6;
+    animation: blink-caret 1s steps(2, start) infinite;
+}
+
+@keyframes blink-caret {
+    from, to {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
   
 
