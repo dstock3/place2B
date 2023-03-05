@@ -12,6 +12,7 @@ body {
     flex-direction: column;
     align-items: space-between;
     height: 100%;
+    color: #FFFFFF;
 }
 
 header {
@@ -20,7 +21,6 @@ header {
     align-items: center;
     background-color: #2C3E50;
     padding: 20px;
-    color: #FFFFFF;
     height: 10vh;
 }
   
@@ -32,29 +32,11 @@ header h1 {
 /* Style for the main content */
 main {
     width: 100vw;
-    height: 70vh;
+    height: 80vh;
     margin: 0 auto;
     padding: 20px;
     display: flex;
     justify-content: space-between;
-}
-
-.sidebar {
-    width: 25vw;
-    height: 100%;
-}
-
-#mac-changer-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-}
-
-button {
-    font-size: .75em;
-    font-size: 20px;
-    padding: 10px 20px;
 }
 
 /* Style for the footer */
@@ -66,17 +48,40 @@ footer {
     height: 10vh;
 }
 
+button {
+    font-size: .75em;
+    font-size: 20px;
+    padding: 10px 20px;
+}
+
 /* Panels */
 
 .panel-container {
     width: 73vw;
     display: flex;
+    flex-wrap: wrap;
+    margin-left: 5px;
+}
+
+.panel {
+    background-color: #2C3E50;
+    border-radius: 5px;
+    padding: 5px;
+    height: 49%;
+    width: 31%;
+    margin-right: 5px;
 }
 
 .panel-controller {
     width: 100%;
+    height: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+}
+
+.panel-head {
+    font-size: 1.05em;
+    font-weight: bold;
 }
 
 .min-max-panel {
@@ -89,20 +94,37 @@ footer {
     background-color: #698fb6;
 }
 
-.panel {
-    background-color: #2C3E50;
-    border-radius: 5px;
-    padding: 5px;
+.network-interface-container {
+    height: 25%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
+.mac-changer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 66%;
+    width: 100%;
+}
+
+.sidebar {
+    width: 33vw;
+    height: 100%;
 }
 
 /* Terminal */
 .terminal-display {
+    border-radius: 5px;
+    border: 2px solid #698fb6;
     background-color: #222;
     color: #fff;
     font-family: monospace;
     padding: 10px;
-    height: 200px;
+    height: 100%;
+
 }
   
 .terminal-line {
