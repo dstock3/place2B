@@ -1,0 +1,27 @@
+{
+    "pentesting_tools": [
+        {
+            "id": "mac",
+            "name": "macchanger",
+            "description": "GNU MAC Changer is a utility that simplifies the manipulation of network interface MAC addresses. These addresses are unique identifiers on networks and can be changed on most network hardware. Changing MAC addresses frequently can prevent or complicate tracking by marketing firms, government agencies, and others who exploit them for this purpose.",
+            "version": "1.7.0",
+            "language": "C",
+            "website": "https://github.com/alobbs/macchanger",
+            "license": "GPL-3.0-only",
+            "dependencies": [
+                "libpcap0.8",
+                "libsqlite3-dev"
+            ]
+        },
+        {
+            "id": "",
+            "name": "",
+            "description": "",
+            "version": "",
+            "language": "",
+            "website": "",
+            "license": "",
+            "dependencies": []
+        }
+    ]
+}

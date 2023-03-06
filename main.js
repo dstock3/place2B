@@ -1,7 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const sudo = require('sudo-prompt');
 const { getNetworkInterfaces } = require('./tools/network');
-const { changeMacAddress } = require('./tools/macchanger');
 
 let mainWindow;
 
@@ -25,23 +24,6 @@ const createWindow = async () => {
   const interfaces = await getNetworkInterfaces();
   mainWindow.webContents.send('available-interfaces', interfaces);
 
-  ipcMain.on('change-mac-address', async (event, iface) => {
-    
-    try {
-      const result = await changeMacAddress(iface);
-      event.reply('mac-address-changed', `Result: ${result}`);
-      (async () => {
-        try {
-          const result = await changeMacAddress(iface);
-          event.reply('mac-address-changed', `Result: ${result}`);
-        } catch (err) {
-          console.error(`Error changing MAC address: ${err.message}`);
-        }
-      })
-    } catch (err) {
-      console.error(`Error changing MAC address: ${err.message}`);
-    }
-  });
 };
 
 app.whenReady().then(createWindow);
