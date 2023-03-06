@@ -2,14 +2,15 @@ const { ipcRenderer } = require('electron');
 const { addMacChanger } = require('./doc/macchanger')
 const { addNetworkInterfaces } = require('./doc/network')
 const { getNetworkInterfaces } = require('./tools/network');
-const { renderTerminal } = require('./doc/terminal');
+const { renderTerminal, clearTerminal } = require('./doc/terminal');
 const { tabSelect } = require('./doc/tabSelect');
 const { helper } = require('./doc/help')
 
 tabSelect();
-helper();
+helper("test test test content longer message test test test", clearTerminal);
 
 /*
+
 try {
   const MyTerminal = require('./tools/terminal')
   const terminal = new MyTerminal
@@ -17,7 +18,9 @@ try {
 } catch (e) {
   console.error('Error initializing terminal:', e)
 }
+
 */
+
 const handleChangeMacClick = () => {
   const iface = networkInterfacesSelect.value;
   ipcRenderer.send('change-mac-address', iface); // pass the iface name as an argument
@@ -29,7 +32,6 @@ const handleChangeMacClick = () => {
     }
   });
 };
-
 
 addMacChanger(handleChangeMacClick)
 addNetworkInterfaces(getNetworkInterfaces)

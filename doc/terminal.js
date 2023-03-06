@@ -18,8 +18,7 @@ const renderTerminal = (terminal) => {
   
       terminalDisplay.appendChild(lineElement);
     };
-  };
+};
   
-
 module.exports = { renderTerminal }
   
