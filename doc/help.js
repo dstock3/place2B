@@ -2,11 +2,14 @@ const helper = (content) => {
     const infoElement = document.querySelector('.info');
 
     const clearButton = document.querySelector('.clear-button');
-
+    const terminalDisplay = document.querySelector('.terminal-display');
     let terminalLines = Array.from(document.getElementsByClassName('.terminal-line'));
 
     infoElement.addEventListener('click', () => {
-        const terminalDisplay = document.querySelector('.terminal-display');
+        const terminalCursor = document.querySelector('.terminal-cursor');
+        if (terminalCursor) terminalCursor.remove();
+
+        
         const newLine = document.createElement('div');
         newLine.classList.add('terminal-line', 'new');
         newLine.textContent = content;
@@ -16,9 +19,14 @@ const helper = (content) => {
     });
     
     clearButton.addEventListener('click', () => {
-      terminalLines.forEach((line) => {
-        line.remove();
-      });
+        terminalLines.forEach((line) => {
+            line.remove();
+        });
+
+        const terminalCursor = document.createElement('span');
+        terminalCursor.classList.add('terminal-cursor');
+        terminalDisplay.appendChild(terminalCursor);
+
     });
 };
 
