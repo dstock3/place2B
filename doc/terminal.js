@@ -13,16 +13,15 @@ const helper = (infoElement, content) => {
         terminalDisplay.appendChild(newLine);
         newLine.scrollIntoView();
         terminalLines.push(newLine);
+        const newCursor = document.createElement('span');
+        newCursor.classList.add('terminal-cursor');
+        terminalDisplay.appendChild(newCursor);
     });
     
     clearButton.addEventListener('click', () => {
         terminalLines.forEach((line) => {
             line.remove();
         });
-
-        const terminalCursor = document.createElement('span');
-        terminalCursor.classList.add('terminal-cursor');
-        terminalDisplay.appendChild(terminalCursor);
     });
 };
 
