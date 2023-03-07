@@ -17,7 +17,12 @@ const changeMacAddress = async (iface) => {
     });
   });
 };
-
+/*
+const displayMacAddress = async () => {
+  const networkInterfaces = await getNetworkInterfaces();
+  console.log(networkInterfaces);
+}
+*/
 const MacChanger = async () => {
   const networkInterfaces = await getNetworkInterfaces();
   const iface = await prompt({

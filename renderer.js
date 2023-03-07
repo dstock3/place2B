@@ -1,11 +1,19 @@
 const { ipcRenderer } = require('electron');
 const { addNetworkInterfaces } = require('./doc/network')
 const { getNetworkInterfaces } = require('./tools/network');
+//const { displayMacAddress } = require('./tools/macchanger');
 const { tabSelect } = require('./doc/tabSelect');
 const { infoController } = require('./doc/info')
 
 tabSelect();
 infoController();
+
+const setupInterface = (async () => {
+  const interfaces = await getNetworkInterfaces();
+  addNetworkInterfaces(interfaces);
+})();
+
+//displayMacAddress();
 
 /*
 const handleChangeMacClick = () => {

@@ -21,9 +21,6 @@ const createWindow = async () => {
     console.error('Uncaught exception:', err);
   });
 
-  const interfaces = await getNetworkInterfaces();
-  mainWindow.webContents.send('available-interfaces', interfaces);
-
 };
 
 app.whenReady().then(createWindow);

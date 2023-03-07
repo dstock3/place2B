@@ -1,25 +1,18 @@
+const addNetworkInterfaces = networkInfo => {
+    networkInfo.forEach(interface => {
+        const interfaceContainer = document.querySelector('.network-interface-container');
 
-const addNetworkInterfaces = getNetworkInterfaces => {
-    // Display network interfaces
-    const networksContainer = document.getElementById('network-interface-container');
+        const interfaceName = document.createElement('div');
+        interfaceName.classList.add('interface-name');
+        interfaceName.textContent = interface.name;
+        interfaceContainer.appendChild(interfaceName);
 
-    async function displayNetworkInterfaces() {
-        const networkInterfaces = await getNetworkInterfaces();
-        console.log(networkInterfaces)
+        const interfaceAddress = document.createElement('div');
+        interfaceAddress.classList.add('interface-address');
+        interfaceAddress.textContent = interface.address;
+        interfaceContainer.appendChild(interfaceAddress);
+    });
 
-        networkInterfaces.forEach((iface) => {
-            const ifaceDiv = document.createElement('div');
-            const nameSpan = document.createElement('span');
-            const addressSpan = document.createElement('span');
-            nameSpan.textContent = `Name: ${iface.name}`;
-            addressSpan.textContent = `Address: ${iface.address}`;
-            ifaceDiv.appendChild(nameSpan);
-            ifaceDiv.appendChild(addressSpan);
-            networksContainer.appendChild(ifaceDiv);
-        });
-    }
-
-    displayNetworkInterfaces();
 }
 
 module.exports = { addNetworkInterfaces }
