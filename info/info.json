@@ -3,25 +3,12 @@
         {
             "id": "mac",
             "name": "macchanger",
-            "description": "GNU MAC Changer is a utility that simplifies the manipulation of network interface MAC addresses. These addresses are unique identifiers on networks and can be changed on most network hardware. Changing MAC addresses frequently can prevent or complicate tracking by marketing firms, government agencies, and others who exploit them for this purpose.",
-            "version": "1.7.0",
-            "language": "C",
-            "website": "https://github.com/alobbs/macchanger",
-            "license": "GPL-3.0-only",
-            "dependencies": [
-                "libpcap0.8",
-                "libsqlite3-dev"
-            ]
+            "description": "GNU MAC Changer is a utility that simplifies the manipulation of network interface MAC addresses. These addresses are unique identifiers on networks and can be changed on most network hardware. Changing MAC addresses frequently can prevent or complicate tracking by marketing firms, government agencies, and others who exploit them for this purpose."
         },
         {
             "id": "net",
             "name": "",
-            "description": "test test",
-            "version": "",
-            "language": "",
-            "website": "",
-            "license": "",
-            "dependencies": []
+            "description": "ifconfig and ip addr are standard commands that allow you to configure and manage network interfaces on Linux systems. Both allow you to view, configure and control network interfaces, such as setting IP addresses, netmasks, and broadcast addresses. While ifconfig is an older command, it is still available on many systems, but it is recommended to use the newer and more comprehensive ip addr command for configuring and managing network interfaces."
         }
     ]
 }

@@ -238,8 +238,8 @@ button {
     color: #94c8fc;
     position: relative;
     font-family: monospace;
-    font-size: 14px;
     line-height: 20px;
+    font-size: .85em;
 }
 
 .hidden {
