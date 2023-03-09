@@ -16,7 +16,7 @@ const getNetworkInterfaces = async () => {
       const { stdout } = await exec(`ifconfig ${name}`);
       console.log(`ifconfig ${name} output:`, stdout);
       if (stdout.includes('UP') && stdout.includes('RUNNING')) {
-        activeInterfaces.push({ name, address: interfaces[name][0].address, status: "UP" });
+        activeInterfaces.push({ name, address: interfaces[name][0].address, state: "UP" });
       }
     } catch (err) {
       console.error(`Error checking interface ${name}: ${err.message}`);

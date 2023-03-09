@@ -2,24 +2,44 @@ const addNetworkInterfaces = networkInfo => {
     networkInfo.forEach(interface => {
         const interfaceContainer = document.querySelector('.network-interface-container');
         if (networkInfo) {
-            const interfaceHead = document.createElement('h2');
-            interfaceHead.textContent = 'Available Interfaces';
-            interfaceContainer.appendChild(interfaceHead);
+            const nameContainer = document.createElement('div');
+            nameContainer.classList.add("interface-name-container");
+            const nameLabel = document.createElement('div');
+            nameLabel.classList.add("interface-name-label");
+            nameLabel.textContent = "Interface Name:"
+            nameContainer.appendChild(nameLabel);
 
             const interfaceName = document.createElement('div');
             interfaceName.classList.add('interface-name');
             interfaceName.textContent = interface.name;
-            interfaceContainer.appendChild(interfaceName);
-    
+            nameContainer.appendChild(interfaceName);
+            interfaceContainer.appendChild(nameContainer);
+            
+            const addressContainer = document.createElement('div');
+            addressContainer.classList.add("interface-address-container");
+            const addressLabel = document.createElement('div');
+            addressLabel.classList.add("interface-address-label");
+            addressLabel.textContent = "Address:"
+            addressContainer.appendChild(addressLabel);
+
             const interfaceAddress = document.createElement('div');
             interfaceAddress.classList.add('interface-address');
             interfaceAddress.textContent = interface.address;
-            interfaceContainer.appendChild(interfaceAddress);
+            addressContainer.appendChild(interfaceAddress);
+            interfaceContainer.appendChild(addressContainer);
+
+            const stateContainer = document.createElement('div');
+            stateContainer.classList.add("interface-state-container");
+            const stateLabel = document.createElement('div');
+            stateLabel.classList.add("interface-state-label");
+            stateLabel.textContent = "State:"
+            stateContainer.appendChild(stateLabel);
 
             const interfaceStatus = document.createElement('div');
-            interfaceStatus.classList.add('interface-status');
-            interfaceStatus.textContent = interface.status;
-            interfaceContainer.appendChild(interfaceStatus);
+            interfaceStatus.classList.add('interface-state');
+            interfaceStatus.textContent = interface.state;
+            stateContainer.appendChild(interfaceStatus);
+            interfaceContainer.appendChild(stateContainer);
         }
     });
 }

@@ -120,6 +120,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    font-size: .85em;
 }
 
 .panel-controller {
@@ -145,13 +146,6 @@ button {
     font-weight: bold;
 }
 
-.network-interface-container {
-    height: 25%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
 .mac-changer-container {
     display: flex;
     flex-direction: column;
@@ -160,6 +154,27 @@ button {
     height: 66%;
     width: 100%;
 }
+
+.network-interface-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.interface-name-container, .interface-address-container, .interface-state-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.interface-state-label, .interface-name-label, .interface-address-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Terminal */
 
 .sidebar {
     display: flex;
@@ -170,7 +185,6 @@ button {
     margin-left: 15px;
 }
 
-/* Terminal */
 .terminal {
     height: 93%;
     width: 100%;
