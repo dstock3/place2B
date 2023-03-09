@@ -1,6 +1,8 @@
+const { getNetworkInterfaces, bringDownInterface, startInterface } = require('../tools/network')
+
 const addNetworkInterfaces = networkInfo => {
+    const interfaceContainer = document.querySelector('.network-interface-container');
     networkInfo.forEach(interface => {
-        const interfaceContainer = document.querySelector('.network-interface-container');
         if (networkInfo) {
             const nameContainer = document.createElement('div');
             nameContainer.classList.add("interface-name-container");
@@ -40,8 +42,45 @@ const addNetworkInterfaces = networkInfo => {
             interfaceStatus.textContent = interface.state;
             stateContainer.appendChild(interfaceStatus);
             interfaceContainer.appendChild(stateContainer);
+
+            const toggleNetworkStateButton = document.createElement('div');
+            toggleNetworkStateButton.classList.add('toggle-network-state');
+            toggleNetworkStateButton.id = interface.name
+            toggleNetworkStateButton.textContent = "Toggle Network State"
+            interfaceContainer.appendChild(toggleNetworkStateButton);
+
+            toggleNetworkStateButton.addEventListener('click', () => {
+                if (interface.state === "UP") {
+                    bringDownInterface(interface.name)
+                    interfaceContainer.remove();
+                    const newContainer = document.createElement('div');
+                    newContainer.classList.add('.network-interface-container');
+
+                    (async () => {
+                        const interfaces = await getNetworkInterfaces();
+                        addNetworkInterfaces(interfaces);
+                    })();
+                      
+                } else {
+                    startInterface(interface.name)
+                    interfaceContainer.remove();
+
+                    const newContainer = document.createElement('div');
+                    newContainer.classList.add('.network-interface-container');
+
+                    (async () => {
+                        const interfaces = await getNetworkInterfaces();
+                        addNetworkInterfaces(interfaces);
+                    })();
+                      
+                }   
+
+
+            });
         }
     });
 }
+
+
 
 module.exports = { addNetworkInterfaces }
