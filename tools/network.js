@@ -1,52 +1,55 @@
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const { networkInterfaces } = require('os');
-const { refreshTerminal } = require('../doc/terminal')
+const { refreshTerminal } = require('../doc/terminal');
 
 const getNetworkInterfaces = async () => {
-  const interfaces = networkInterfaces();
-  const physicalInterfaces = Object.keys(interfaces).filter(name => {
-    const iface = interfaces[name][0];
-    return !iface.internal && iface.mac !== '00:00:00:00:00:00';
-  });
+  try {
+    const { stdout } = await exec(`ip -br link show`);
+    const lines = stdout.split('\n').filter(line => line.trim() !== '');
+    refreshTerminal(lines);
+    const activeInterfaces = [];
 
-  const activeInterfaces = [];
-  for (const name of physicalInterfaces) {
-    try {
-      refreshTerminal(`ifconfig ${name}`)
-      const { stdout } = await exec(`ifconfig ${name}`);
-      refreshTerminal(stdout);
-      
-      if (stdout.includes('DOWN')) {
-        activeInterfaces.push({ name, address: interfaces[name][0].address, state: "DOWN" });
+    for (const line of lines) {
+      const [name, flags, ...rest] = line.split(/\s+/);
+      const isUp = flags.includes('UP');
+
+      if (name === 'lo') {
+        continue; // Skip any loopback interface
       }
 
-      if (stdout.includes('UP') && stdout.includes('RUNNING')) {
-        activeInterfaces.push({ name, address: interfaces[name][0].address, state: "UP" });
-      }
+      const addressInfo = await exec(`ip -json -4 addr show ${name}`);
+      const jsonOutput = JSON.parse(addressInfo.stdout);
 
-    } catch (err) {
-      refreshTerminal(`Error checking interface ${name}: ${err.message}`);
+      if (jsonOutput.length > 0 && jsonOutput[0].addr_info.length > 0) {
+        const address = jsonOutput[0].addr_info[0].local;
+        activeInterfaces.push({ name, address, state: isUp ? 'UP' : 'DOWN' });
+      } else {
+        activeInterfaces.push({ name, address: 'N/A', state: isUp ? 'UP' : 'DOWN' });
+      }
     }
-  }
 
-  return activeInterfaces;
+    return activeInterfaces;
+  } catch (err) {
+    console.error(`Error getting network interfaces: ${err.message}`);
+    return [];
+  }
 };
 
 const bringDownInterface = async (interfaceName) => {
   try {
-    const down = await exec(`sudo ifconfig ${interfaceName} down`)
+    await exec(`sudo ip link set ${interfaceName} down`);
   } catch (err) {
     refreshTerminal(`Error setting interface state ${interfaceName}: ${err.message}`);
   }
-}
+};
 
 const startInterface = async (interfaceName) => {
   try {
-    const down = await exec(`sudo ifconfig ${interfaceName} up`)
+    await exec(`sudo ip link set ${interfaceName} up`);
   } catch (err) {
     refreshTerminal(`Error setting interface state ${interfaceName}: ${err.message}`);
   }
-}
+};
 
 module.exports = { getNetworkInterfaces, bringDownInterface, startInterface };

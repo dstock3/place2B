@@ -2,6 +2,8 @@ const { getNetworkInterfaces, bringDownInterface, startInterface } = require('..
 
 const addNetworkInterfaces = networkInfo => {
     const interfaceContainer = document.querySelector('.network-interface-container');
+    const parent = interfaceContainer.parentElement
+
     networkInfo.forEach(interface => {
         if (networkInfo) {
             const nameContainer = document.createElement('div');
@@ -49,38 +51,21 @@ const addNetworkInterfaces = networkInfo => {
             toggleNetworkStateButton.textContent = "Toggle Network State"
             interfaceContainer.appendChild(toggleNetworkStateButton);
 
-            toggleNetworkStateButton.addEventListener('click', () => {
+            toggleNetworkStateButton.addEventListener('click', async () => {
                 if (interface.state === "UP") {
-                    bringDownInterface(interface.name)
-                    interfaceContainer.remove();
-                    const newContainer = document.createElement('div');
-                    newContainer.classList.add('.network-interface-container');
-
-                    (async () => {
-                        const interfaces = await getNetworkInterfaces();
-                        addNetworkInterfaces(interfaces);
-                    })();
-                      
+                  await bringDownInterface(interface.name);
                 } else {
-                    startInterface(interface.name)
-                    interfaceContainer.remove();
-
-                    const newContainer = document.createElement('div');
-                    newContainer.classList.add('.network-interface-container');
-
-                    (async () => {
-                        const interfaces = await getNetworkInterfaces();
-                        addNetworkInterfaces(interfaces);
-                    })();
-                      
-                }   
-
-
-            });
+                  await startInterface(interface.name);
+                }
+              
+                interfaceContainer.innerHTML = '';
+              
+                const interfaces = await getNetworkInterfaces();
+                console.log(interfaces)
+                addNetworkInterfaces(interfaces);
+              });
         }
     });
 }
-
-
 
 module.exports = { addNetworkInterfaces }

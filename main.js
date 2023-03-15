@@ -1,6 +1,4 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const sudo = require('sudo-prompt');
-const { getNetworkInterfaces } = require('./tools/network');
 
 let mainWindow;
 
