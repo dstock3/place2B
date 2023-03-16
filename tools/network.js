@@ -28,7 +28,6 @@ const getNetworkInterfaces = async () => {
         activeInterfaces.push({ name, address: 'N/A', state: isUp ? 'UP' : 'DOWN' });
       }
     }
-
     return activeInterfaces;
   } catch (err) {
     console.error(`Error getting network interfaces: ${err.message}`);
@@ -52,4 +51,24 @@ const startInterface = async (interfaceName) => {
   }
 };
 
-module.exports = { getNetworkInterfaces, bringDownInterface, startInterface };
+const enableMonitorMode = async (interfaceName) => {
+  try {
+    await exec(`sudo ifconfig ${interfaceName} down`);
+    await exec(`sudo iwconfig ${interfaceName} mode monitor`);
+    await exec(`sudo ifconfig ${interfaceName} up`);
+  } catch (err) {
+    refreshTerminal(`Error enabling monitor mode on ${interfaceName}: ${err.message}`);
+  }
+};
+
+const disableMonitorMode = async (interfaceName) => {
+  try {
+    await exec(`sudo ifconfig ${interfaceName} down`);
+    await exec(`sudo iwconfig ${interfaceName} mode managed`);
+    await exec(`sudo ifconfig ${interfaceName} up`);
+  } catch (err) {
+    refreshTerminal(`Error disabling monitor mode on ${interfaceName}: ${err.message}`);
+  }
+};
+
+module.exports = { getNetworkInterfaces, bringDownInterface, startInterface, enableMonitorMode, disableMonitorMode };
