@@ -1,4 +1,4 @@
-const { getNetworkInterfaces, bringDownInterface, startInterface } = require('../tools/network')
+const { getNetworkInterfaces, bringDownInterface, startInterface, enableMonitorMode, disableMonitorMode } = require('../tools/network')
 
 const addNetworkInterfaces = networkInfo => {
     const interfaceContainer = document.querySelector('.network-interface-container');
@@ -63,9 +63,33 @@ const addNetworkInterfaces = networkInfo => {
                 const interfaces = await getNetworkInterfaces();
                 console.log(interfaces)
                 addNetworkInterfaces(interfaces);
-              });
+            });
+
+            const toggleMonitorModeButton = document.createElement('div');
+            toggleMonitorModeButton.classList.add('toggle-mode');
+            toggleMonitorModeButton.textContent = 'Toggle Mode';
+            interfaceContainer.appendChild(toggleMonitorModeButton);
+
+            let isMonitorModeEnabled = false;
+
+            toggleMonitorModeButton.addEventListener('click', async () => {
+              if (isMonitorModeEnabled) {
+                await disableMonitorMode(interface.name);
+                isMonitorModeEnabled = false;
+              } else {
+                await enableMonitorMode(interface.name);
+                isMonitorModeEnabled = true;
+              }
+              
+              const interfaces = await getNetworkInterfaces();
+              addNetworkInterfaces(interfaces);
+            });
         }
     });
 }
+
+
+
+
 
 module.exports = { addNetworkInterfaces }

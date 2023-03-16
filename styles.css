@@ -174,7 +174,7 @@ button {
     margin-right: 5px;
 }
 
-.toggle-network-state {
+.toggle-network-state, .toggle-mode {
     margin-top: 5px;
     display: flex;
     align-items: center;
